@@ -20,7 +20,7 @@ export function useBitcoinExchangeRate() {
   const url = `${env.coinApiUrl}/v1/exchangerate/BTC`;
   const [baseExchangeRate, setBaseExchangeRate] = useAtom(baseExchangeRateAtom);
 
-  const { data, fetchData } = useAxiosGet<BaseExchangeRate>(url, {
+  const { data, loading, fetchData } = useAxiosGet<BaseExchangeRate>(url, {
     headers: coinApiHeaders,
   });
 
@@ -33,5 +33,6 @@ export function useBitcoinExchangeRate() {
   return {
     data,
     fetchData,
+    loading,
   };
 }

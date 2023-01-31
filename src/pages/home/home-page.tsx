@@ -1,19 +1,29 @@
 import Container from "@mui/material/Container";
-import { useEffect } from "react";
-import { useBitcoinExchangeRate } from "../../hooks/use-bitcoin-exchange-rate";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  BaseExchangeRate,
+  useBitcoinExchangeRate,
+} from "../../hooks/use-bitcoin-exchange-rate";
 import { BitcoinExchangeTable } from "./components/bitcoin-exchange-table";
 
 export default function HomePage() {
-  const { data } = useBitcoinExchangeRate();
+  const { data, loading } = useBitcoinExchangeRate();
 
-  useEffect(() => {
-    console.log(data, " :data");
-  }, [data]);
+  const exchangeTable = (data: BaseExchangeRate | null) => {
+    return data && <BitcoinExchangeTable data={data?.rates} />;
+  };
 
   return (
     <div className="pt-5">
       <Container maxWidth="lg">
-        {data && <BitcoinExchangeTable data={data?.rates}/>}
+        <h2>Bitcoin Exchange Rate</h2>
+        {loading ? (
+          <div className="text-center">
+            <CircularProgress />
+          </div>
+        ) : (
+          exchangeTable(data)
+        )}
       </Container>
     </div>
   );

@@ -5,9 +5,11 @@ export function useAxiosGet<T>(url: string, options: AxiosRequestConfig = {}) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await axios.get<T>(url, options);
       setData(response.data);
     } catch (error: any) {
@@ -16,6 +18,7 @@ export function useAxiosGet<T>(url: string, options: AxiosRequestConfig = {}) {
       }
     } finally {
       setLoaded(true);
+      setLoading(false);
     }
   };
 
@@ -23,5 +26,5 @@ export function useAxiosGet<T>(url: string, options: AxiosRequestConfig = {}) {
     fetchData();
   }, []);
 
-  return { data, error, loaded, fetchData };
+  return { data, error, loaded, loading, fetchData };
 }

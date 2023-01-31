@@ -1,5 +1,8 @@
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+
 import { ExchangeRate } from "../../../hooks/use-bitcoin-exchange-rate";
 
 interface BitcoinExchangeTableProps {
@@ -19,17 +22,28 @@ export function BitcoinExchangeTable({ data }: BitcoinExchangeTableProps) {
         return format(date, "dd MMMM yyyy H:mma");
       },
     },
+    {
+      field: "action",
+      headerName: "Action",
+      minWidth: 160,
+      renderCell: (params) => {
+        return (
+          <Link to={`exchange/${params.row.asset_id_quote}`}>
+            <Button variant="contained">Detail</Button>
+          </Link>
+        );
+      },
+    },
   ];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={data}
-        columns={columns}
-        pageSize={20}
-        rowsPerPageOptions={[20]}
-        getRowId={(row) => row.asset_id_quote}
-      />
-    </div>
+    <DataGrid
+      autoHeight
+      rows={data}
+      columns={columns}
+      pageSize={20}
+      rowsPerPageOptions={[20]}
+      getRowId={(row) => row.asset_id_quote}
+    />
   );
 }
