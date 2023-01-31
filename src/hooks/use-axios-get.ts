@@ -17,8 +17,8 @@ export function useAxiosGet<T>(url: string, options: AxiosRequestConfig = {}) {
         setError(error.message);
       }
     } finally {
-      setLoaded(true);
       setLoading(false);
+      setLoaded(true);
     }
   };
 

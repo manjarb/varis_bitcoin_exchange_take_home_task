@@ -6,11 +6,16 @@ import './styles/spacing.scss';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import HomePage from './pages/home/home-page';
+import DetailsPage from './pages/details/details-page';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />
+    element: <HomePage />,
+  },
+  {
+    path: "exchange/:assetId",
+    element: <DetailsPage />,
   },
 ]);
 

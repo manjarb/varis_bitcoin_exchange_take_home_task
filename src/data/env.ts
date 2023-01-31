@@ -7,3 +7,7 @@ export const coinApiHeaders = {
   "X-CoinAPI-Key": env.coinApiKey,
   "Content-Type": "application/json",
 };
+
+export const currencyId = {
+  BTC: 'BTC'
+}

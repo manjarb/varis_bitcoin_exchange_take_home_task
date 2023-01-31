@@ -2,8 +2,7 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
-
-import { ExchangeRate } from "../../../hooks/use-bitcoin-exchange-rate";
+import { ExchangeRate } from "../../../interfaces/exchange.interface";
 
 interface BitcoinExchangeTableProps {
   data: ExchangeRate[];
