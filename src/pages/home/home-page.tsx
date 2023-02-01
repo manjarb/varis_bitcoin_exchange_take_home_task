@@ -25,10 +25,11 @@ export default function HomePage() {
       <Container maxWidth="lg">
         <div>
           <h2 className="inline-block mr-5">Bitcoin Exchange Rate</h2>
-          Last update <strong>{latestFetchDateTime}</strong>
+          Last update{" "}
+          <strong data-testid="latest-fetch-time">{latestFetchDateTime}</strong>
         </div>
         {loading && !loaded && (
-          <div className="text-center">
+          <div className="text-center" data-testid="progress">
             <CircularProgress />
           </div>
         )}
