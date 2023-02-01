@@ -15,3 +15,15 @@ code {
 .text-center {
   text-align: center;
 }
+
+.flex {
+  display: flex;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.green-text {
+  color: #00A68C;
+}

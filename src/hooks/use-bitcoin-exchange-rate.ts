@@ -1,6 +1,7 @@
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
 import { env } from "../data/env";
+import { convertRatesToArray } from "../helpers/exchange.helper";
 import {
   BaseExchangeRate,
   ExchangeRate,
@@ -20,10 +21,7 @@ export function useBitcoinExchangeRate() {
 
   useEffect(() => {
     if (data) {
-      const rates: ExchangeRate[] = Object.keys(data.rates).map((key) => ({
-        symbol: key,
-        rate: data.rates[key],
-      }));
+      const rates: ExchangeRate[] = convertRatesToArray(data.rates);
       setExchangeRates(rates);
       setBaseExchangeRate(data);
     }

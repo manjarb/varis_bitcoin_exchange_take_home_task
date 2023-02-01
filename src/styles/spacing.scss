@@ -1,7 +1,7 @@
 $sizes: 12;
 
 @mixin margin-classes {
-  @for $i from 1 through $sizes {
+  @for $i from 0 through $sizes {
      $margin: $i * 0.25rem;
     /* margin #{$margin} */
     .m-#{$i}  {margin: $margin;}

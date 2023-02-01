@@ -1,20 +1,17 @@
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
-import { coinApiHeaders, currencyId, env } from "../data/env";
+import { currencyId, env } from "../data/env";
+import { ConvertExchangeRate } from "../interfaces/exchange.interface";
 import { useAxiosGet } from "./use-axios-get";
 
-const exchangeRatePairAtom = atom<any | null>(null);
+const exchangeRatePairAtom = atom<ConvertExchangeRate | null>(null);
 
 export function useBitcoinExchangeRatePair(pairId: string | undefined) {
-  const url = `${env.coinApiUrl}/v1/exchangerate/${currencyId.BTC}/${pairId}`;
+  const url = `${env.exchangeRateApiUrl}/convert?from=${currencyId.BTC}&to=${pairId}`;
   const [exchangeRatePair, setExchangeRatePair] = useAtom(exchangeRatePairAtom);
 
-  const { data, loading, loaded, fetchData } = useAxiosGet<any>(
-    url,
-    {
-      headers: coinApiHeaders,
-    }
-  );
+  const { data, loading, loaded, fetchData } =
+    useAxiosGet<ConvertExchangeRate>(url);
 
   useEffect(() => {
     if (data) {

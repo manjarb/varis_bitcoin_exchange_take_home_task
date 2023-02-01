@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 
-export function useAxiosGet<T>(url: string, options: AxiosRequestConfig = {}) {
+export function useAxiosGet<T>(url: string, options: AxiosRequestConfig = {}, isFetchInit = true) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
@@ -23,7 +23,9 @@ export function useAxiosGet<T>(url: string, options: AxiosRequestConfig = {}) {
   };
 
   useEffect(() => {
-    fetchData();
+    if (isFetchInit) {
+      fetchData();
+    }
   }, []);
 
   return { data, error, loaded, loading, fetchData };
