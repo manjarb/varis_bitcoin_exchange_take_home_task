@@ -10,24 +10,25 @@ interface BitcoinExchangeTableProps {
 
 export function BitcoinExchangeTable({ data }: BitcoinExchangeTableProps) {
   const columns: GridColDef[] = [
-    { field: "asset_id_quote", flex: 1, headerName: "Asset Id" },
+    { field: "symbol", flex: 1, headerName: "Symbol" },
     { field: "rate", flex: 1, headerName: "Rate" },
-    {
-      field: "time",
-      headerName: "Time",
-      minWidth: 200,
-      valueGetter: (params: GridValueGetterParams) => {
-        const date = new Date(params.row.time);
-        return format(date, "dd MMMM yyyy H:mma");
-      },
-    },
+    // TODO New Api do not have time so need to comment out
+    // {
+    //   field: "time",
+    //   headerName: "Time",
+    //   minWidth: 200,
+    //   valueGetter: (params: GridValueGetterParams) => {
+    //     const date = new Date(params.row.time);
+    //     return format(date, "dd MMMM yyyy H:mma");
+    //   },
+    // },
     {
       field: "action",
       headerName: "Action",
       minWidth: 160,
       renderCell: (params) => {
         return (
-          <Link to={`exchange/${params.row.asset_id_quote}`}>
+          <Link to={`exchange/${params.row.symbol}`}>
             <Button variant="contained">Detail</Button>
           </Link>
         );
@@ -42,7 +43,7 @@ export function BitcoinExchangeTable({ data }: BitcoinExchangeTableProps) {
       columns={columns}
       pageSize={20}
       rowsPerPageOptions={[20]}
-      getRowId={(row) => row.asset_id_quote}
+      getRowId={(row) => `exchange-table-${row.symbol}`}
     />
   );
 }

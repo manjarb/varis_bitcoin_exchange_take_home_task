@@ -5,11 +5,11 @@ import { useBitcoinExchangeRatePair } from "../../hooks/use-bitcoin-exchange-rat
 
 export default function DetailsPage() {
   let { assetId } = useParams();
-  const { data } = useBitcoinExchangeRatePair(assetId);
+  const { data: exchangeData } = useBitcoinExchangeRatePair(assetId);
 
   useEffect(() => {
-    console.log(data, " :data");
-  }, [data]);
+    console.log(exchangeData, " :data");
+  }, [exchangeData]);
 
   return (
     <div className="pt-5">

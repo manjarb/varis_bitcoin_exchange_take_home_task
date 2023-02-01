@@ -1,6 +1,7 @@
 export const env = {
   coinApiKey: process.env.REACT_APP_COIN_API_KEY,
   coinApiUrl: process.env.REACT_APP_COIN_API_URL,
+  exchangeRateApiUrl: process.env.REACT_APP_EXCHANGE_RATE_API_URL,
 };
 
 export const coinApiHeaders = {

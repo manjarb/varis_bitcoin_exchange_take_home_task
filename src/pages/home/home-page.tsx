@@ -4,13 +4,13 @@ import {
   useBitcoinExchangeRate,
 } from "../../hooks/use-bitcoin-exchange-rate";
 import { BitcoinExchangeTable } from "./components/bitcoin-exchange-table";
-import { BaseExchangeRate } from "../../interfaces/exchange.interface";
+import { ExchangeRate } from "../../interfaces/exchange.interface";
 
 export default function HomePage() {
-  const { data, loading, loaded } = useBitcoinExchangeRate();
+  const { exchangeRatesData, loading, loaded } = useBitcoinExchangeRate();
 
-  const exchangeTable = (data: BaseExchangeRate | null) => {
-    return data && <BitcoinExchangeTable data={data?.rates} />;
+  const exchangeTable = (data: ExchangeRate[] | null) => {
+    return data && <BitcoinExchangeTable data={data} />;
   };
 
   return (
@@ -22,7 +22,7 @@ export default function HomePage() {
             <CircularProgress />
           </div>
         ) : (
-          exchangeTable(data)
+          exchangeTable(exchangeRatesData)
         )}
       </Container>
     </div>
