@@ -29,3 +29,9 @@ export function convertTimeSeriesRateToArray(
 
   return result;
 }
+
+export function getAverageRate(rates: ExchangeRate[]): number {
+  return rates.reduce((prev, current) => {
+    return prev + current.rate
+  }, 0) / rates.length;
+}

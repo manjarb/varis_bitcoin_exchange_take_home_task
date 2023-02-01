@@ -1,9 +1,7 @@
 import { format } from "date-fns";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { env } from "../data/env";
-import {
-  getPreviousDateFromToday,
-} from "../helpers/date.helper";
+import { getPreviousDateFromToday } from "../helpers/date.helper";
 import { ExchangeRate, TimeSeriesRate } from "../interfaces/exchange.interface";
 import { useAxiosGet } from "./use-axios-get";
 import { currencyId } from "../data/env";
@@ -28,12 +26,16 @@ export function useBitcoinTimeSeriesData(
   );
   const [timeSeriesRate, setTimeSeriesRate] = useAtom(timeSeriesRateAtom);
   const { data, loading, loaded, fetchData } = useAxiosGet<TimeSeriesRate>(url);
+  const [latestFetchDateTime, setLatestFetchDateTime] = useState<Date | null>(
+    null
+  );
 
   useEffect(() => {
     if (data) {
       setBaseTimeSeriesRate(data);
       const timeseriesData = convertTimeSeriesRateToArray(data.rates);
       setTimeSeriesRate(timeseriesData);
+      setLatestFetchDateTime(new Date());
     }
   }, [data]);
 
@@ -42,6 +44,10 @@ export function useBitcoinTimeSeriesData(
     timeSeriesRateData: timeSeriesRate,
     fetchData,
     loading,
-    loaded
+    loaded,
+    latestFetchDateTime: latestFetchDateTime ? format(
+      latestFetchDateTime,
+      "dd MMM yyyy HH:mm:ss"
+    ) : '',
   };
 }

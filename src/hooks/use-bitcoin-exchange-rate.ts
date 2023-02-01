@@ -1,5 +1,6 @@
+import { format } from "date-fns";
 import { atom, useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { env } from "../data/env";
 import { convertRatesToArray } from "../helpers/exchange.helper";
 import {
@@ -15,6 +16,7 @@ export function useBitcoinExchangeRate() {
   const url = `${env.exchangeRateApiUrl}/latest?base=BTC`;
   const [baseExchangeRate, setBaseExchangeRate] = useAtom(baseExchangeRateAtom);
   const [exchangeRates, setExchangeRates] = useAtom(exchangeRatesAtom);
+  const [latestFetchDateTime, setLatestFetchDateTime] = useState<Date | null>(null);
 
   const { data, loading, loaded, fetchData } =
     useAxiosGet<BaseExchangeRate>(url);
@@ -24,6 +26,7 @@ export function useBitcoinExchangeRate() {
       const rates: ExchangeRate[] = convertRatesToArray(data.rates);
       setExchangeRates(rates);
       setBaseExchangeRate(data);
+      setLatestFetchDateTime(new Date());
     }
   }, [data]);
 
@@ -33,5 +36,9 @@ export function useBitcoinExchangeRate() {
     fetchData,
     loading,
     loaded,
+    latestFetchDateTime: latestFetchDateTime ? format(
+      latestFetchDateTime,
+      "dd MMM yyyy HH:mm:ss"
+    ) : '',
   };
 }

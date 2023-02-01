@@ -11,8 +11,15 @@ interface BitcoinExchangeTableProps {
 export function BitcoinExchangeTable({ data }: BitcoinExchangeTableProps) {
   const columns: GridColDef[] = [
     { field: "symbol", flex: 1, headerName: "Symbol" },
-    { field: "rate", flex: 1, headerName: "Rate" },
-    // TODO New Api do not have time so need to comment out
+    {
+      field: "rate",
+      flex: 1,
+      headerName: "Rate",
+      valueGetter: (params: GridValueGetterParams) => {
+        return params.row.rate.toLocaleString("en-US");
+      },
+    },
+    // TODO New Api do not have time attribute so need to comment out
     // {
     //   field: "time",
     //   headerName: "Time",

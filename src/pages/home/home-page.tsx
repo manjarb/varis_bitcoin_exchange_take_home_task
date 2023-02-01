@@ -1,29 +1,38 @@
 import Container from "@mui/material/Container";
 import CircularProgress from "@mui/material/CircularProgress";
-import {
-  useBitcoinExchangeRate,
-} from "../../hooks/use-bitcoin-exchange-rate";
-import { BitcoinExchangeTable } from "./components/bitcoin-exchange-table";
+import { useBitcoinExchangeRate } from "../../hooks/use-bitcoin-exchange-rate";
+import { BitcoinExchangeTable } from "./components/bitcoin-exchange-table.component";
 import { ExchangeRate } from "../../interfaces/exchange.interface";
+import { useEffect } from "react";
 
 export default function HomePage() {
-  const { exchangeRatesData, loading, loaded } = useBitcoinExchangeRate();
+  const { exchangeRatesData, loading, loaded, latestFetchDateTime, fetchData } =
+    useBitcoinExchangeRate();
 
   const exchangeTable = (data: ExchangeRate[] | null) => {
     return data && <BitcoinExchangeTable data={data} />;
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchData();
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="pt-5">
       <Container maxWidth="lg">
-        <h2>Bitcoin Exchange Rate</h2>
-        {loading || !loaded ? (
+        <div>
+          <h2 className="inline-block mr-5">Bitcoin Exchange Rate</h2>
+          Last update <strong>{latestFetchDateTime}</strong>
+        </div>
+        {loading && !loaded && (
           <div className="text-center">
             <CircularProgress />
           </div>
-        ) : (
-          exchangeTable(exchangeRatesData)
         )}
+        {loaded && exchangeTable(exchangeRatesData)}
       </Container>
     </div>
   );
